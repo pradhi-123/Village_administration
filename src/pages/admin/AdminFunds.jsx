@@ -4,7 +4,7 @@ import { MockDB } from '../../services/mockDatabase';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
 import Modal from '../../components/common/Modal';
-import { Plus, Wallet, Shield, Edit, FileText, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Edit, FileText } from 'lucide-react';
 import { AuditService } from '../../services/AuditService';
 
 const AdminFunds = () => {
@@ -44,8 +44,8 @@ const AdminFunds = () => {
 
     const filteredFunds = funds.filter(f =>
         f && (
-            (f.id || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (f.title || '').toLowerCase().includes(searchTerm.toLowerCase())
+            (String(f.id || '')).toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (String(f.title || '')).toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
 
@@ -461,7 +461,15 @@ const AdminFunds = () => {
                                     <div key={fam.id} style={{ padding: '12px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div>
                                             <div style={{ fontWeight: 'bold', color: '#166534' }}>{fam.headName} ({fam.id})</div>
-                                            <div style={{ fontSize: '0.8rem', color: '#15803d' }}>Paid on: {fam.lastPaid ? new Date(fam.lastPaid).toLocaleDateString() : 'N/A'}</div>
+                                            <div style={{ fontSize: '0.8rem', color: '#15803d' }}>
+                                                Paid on: {(() => {
+                                                    try {
+                                                        return fam.lastPaid ? new Date(fam.lastPaid).toLocaleDateString() : 'N/A';
+                                                    } catch (e) {
+                                                        return 'Invalid Date';
+                                                    }
+                                                })()}
+                                            </div>
                                         </div>
                                         <div style={{ fontWeight: 'bold', color: '#16a34a' }}>₹{fam.paidAmount}</div>
                                     </div>
