@@ -1,0 +1,143 @@
+@import './variables.css';
+
+/* Import modern font if possible, else fallback is defined in variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Baloo+Thambi+2:wght@400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove blue tap box on mobile */
+}
+
+html,
+body {
+    height: 100%;
+}
+
+#root {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mobile container simulation */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: var(--color-background);
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Typography Overrides */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    color: var(--color-text-main);
+    line-height: 1.2;
+}
+
+/* Utility Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--anim-speed) ease-out forwards;
+}
+
+.slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glassmorphism */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Interactive Elements */
+.clickable {
+    transition: transform 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+
+.clickable:active {
+    transform: scale(0.98);
+}
+
+/* Custom Scrollbar for container */
+.scroll-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+/* Helper Utilities */
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.mt-2 {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-4 {
+    margin-top: var(--spacing-md);
+}
+
+.mb-4 {
+    margin-bottom: var(--spacing-md);
+}
+
+.p-4 {
+    padding: var(--spacing-md);
+}
