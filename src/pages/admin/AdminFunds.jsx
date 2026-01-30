@@ -14,7 +14,7 @@ const AdminFunds = () => {
     const getSafeFunds = () => {
         try {
             const data = MockDB.getFunds();
-            return Array.isArray(data) ? data : [];
+            return Array.isArray(data) ? data.filter(f => f && typeof f === 'object') : [];
         } catch (e) {
             console.error("Failed to load funds", e);
             return [];
@@ -143,7 +143,7 @@ const AdminFunds = () => {
     };
 
     const getFundReportData = () => {
-        if (!selectedReportFund) return { paid: [], partial: [], unpaid: [] };
+        if (!selectedReportFund || !selectedReportFund.id) return { paid: [], partial: [], unpaid: [] };
 
         try {
             const allFamilies = MockDB.getFamilies();
@@ -217,8 +217,9 @@ const AdminFunds = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '16px' }}>
-                {filteredFunds.filter(f => !f.groupId).map(fund => {
+                {filteredFunds.filter(f => f && !f.groupId).map(fund => {
                     // Safe access to generated months
+                    if (!fund || !fund.id) return null;
                     const generatedMonths = funds.filter(f => f && f.groupId === fund.id)
                         .sort((a, b) => (a.monthIndex ?? 0) - (b.monthIndex ?? 0));
 
